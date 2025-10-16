@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubiciranje-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kubiciranje-frontend
+  template:
+    metadata:
+      labels:
+        app: kubiciranje-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: your-repo/kubiciranje-frontend:latest
+          ports:
+            - containerPort: 3000

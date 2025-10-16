@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: kubiciranje
+    volumes:
+      - db-data:/var/lib/postgresql/data
+  backend:
+    build: ../backend
+    environment:
+      DATABASE_URL: postgres://postgres:password@db:5432/kubiciranje
+      JWT_SECRET: dev-secret
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+  frontend:
+    build: ../web-frontend
+    ports:
+      - "3000:3000"
+volumes:
+  db-data:

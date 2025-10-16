@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubiciranje-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kubiciranje-backend
+  template:
+    metadata:
+      labels:
+        app: kubiciranje-backend
+    spec:
+      containers:
+        - name: backend
+          image: your-repo/kubiciranje-backend:latest
+          env:
+            - name: DATABASE_URL
+              value: postgres://postgres:password@postgres:5432/kubiciranje
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: kubiciranje-secrets
+                  key: jwt
+          ports:
+            - containerPort: 4000
